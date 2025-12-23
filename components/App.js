@@ -12,7 +12,7 @@ function App() {
   const [companyData, setCompanyData] = useState({
     companyName: "CREATIVE PACKAGING",
     companyAddress: "#70, \"O\" (Opp. Lunar's Exports) Hootagalli Industrial Area\n Mysore - 570018",
-    companyPhone: "990 090 0100, 948 353 4500",
+    companyPhone: "9900900100, 9483534500",
     companyEmail: "cp.mysore@gmail.com",
     companyGST: "29AAFFC957P1ZQ",
     bankName: "CANARA BANK - SME Branch, Mysore",
@@ -62,14 +62,14 @@ function App() {
   // Merge company data with bill data for preview
   const fullBillData = { ...companyData, ...billData };
 
-  // If logged in, show bill generator
+  // If logged in, show Tax Invoice generator
   return e(
     "div",
     { className: "container" },
     e(
       "div",
       { className: "header-bar" },
-      e("h2", { style: { margin: 0 } }, "Bill Generator"),
+      e("h2", { style: { margin: 0 } }, "Creative Packahing Tax Invoice Generator"),
       e(
         "div",
         { style: { display: "flex", gap: "10px" } },

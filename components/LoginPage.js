@@ -6,7 +6,7 @@ function LoginPage({ onLogin }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     // Simple validation - you can customize this
     if (username === "" || password === "") {
       setError("Please enter both username and password");
@@ -28,7 +28,7 @@ function LoginPage({ onLogin }) {
     e(
       "div",
       { className: "login-box" },
-      e("h1", { className: "login-title" }, "Bill Generator"),
+      e("h1", { className: "login-title" }, "Creative Packaging Tax Invoice Generator"),
       e("h2", { className: "login-subtitle" }, "Login to Continue"),
       e(
         "form",
@@ -61,21 +61,21 @@ function LoginPage({ onLogin }) {
           })
         ),
         error &&
-          e(
-            "div",
-            { className: "error-message" },
-            e("span", null, "⚠️ " + error)
-          ),
+        e(
+          "div",
+          { className: "error-message" },
+          e("span", null, "⚠️ " + error)
+        ),
         e(
           "button",
           { type: "submit", className: "btn btn-primary btn-login" },
           "Login"
         ),
-        e(
-          "div",
-          { className: "login-hint" },
-          e("small", null, "Default credentials: admin / admin")
-        )
+        // e(
+        //   "div",
+        //   { className: "login-hint" },
+        //   e("small", null, "Default credentials: admin / admin")
+        // )
       )
     )
   );

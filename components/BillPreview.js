@@ -162,7 +162,7 @@ function BillPreview({ billData, items }) {
   return e(
     "div",
     { className: "preview-section" },
-    e("h2", null, "📄 Bill Preview"),
+    e("h2", null, "📄 Tax Invoice Preview"),
 
     e(
       "div",

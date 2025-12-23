@@ -308,7 +308,7 @@ function BillPreview({ billData, items }) {
                 billData.customerAddress || ""
               ),
               billData.customerPhone &&
-                e("div", null, `Contact: ${billData.customerPhone}`)
+              e("div", null, `Contact: ${billData.customerPhone}`)
             ),
             e(
               "td",
@@ -715,7 +715,7 @@ function BillPreview({ billData, items }) {
                     marginBottom: "3px",
                   },
                 },
-                e("span", { style: { minWidth: "90px" } }, "Bank:"),
+                e("span", { style: { minWidth: "50px" } }, "Bank:"),
                 e("span", null, billData.bankName || "")
               ),
               e(
@@ -837,17 +837,17 @@ function BillPreview({ billData, items }) {
                     "4. All disputes are subject to Bangalore Jurisdiction."
                   ),
                   billData.notes &&
-                    e(
-                      "div",
-                      {
-                        style: {
-                          fontSize: "11px",
-                          marginTop: "5px",
-                          whiteSpace: "pre-line",
-                        },
+                  e(
+                    "div",
+                    {
+                      style: {
+                        fontSize: "11px",
+                        marginTop: "5px",
+                        whiteSpace: "pre-line",
                       },
-                      billData.notes
-                    )
+                    },
+                    billData.notes
+                  )
                 ),
                 // e("div", { style: { flex: 1, padding: "10px" } })
               )

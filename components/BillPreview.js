@@ -521,7 +521,7 @@ function BillPreview({ billData, items }) {
               e(
                 "div",
                 { style: { fontWeight: "bold", fontSize: "11px" } },
-                "HSN CODE: 44129990"
+                "HSN CODE: 44129990 "
               )
             ),
             e(

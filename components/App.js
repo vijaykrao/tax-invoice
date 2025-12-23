@@ -10,14 +10,14 @@ function App() {
 
   // Company data (hardcoded defaults, can be changed in settings)
   const [companyData, setCompanyData] = useState({
-    companyName: "ABC Company Pvt Ltd",
-    companyAddress: "123, Business Street\nCity, State - 400001",
-    companyPhone: "+91 98765 43210",
-    companyEmail: "info@abccompany.com",
-    companyGST: "29ABCDE1234F1Z5",
-    bankName: "State Bank of India",
-    bankAccount: "1234567890",
-    bankIFSC: "SBIN0001234",
+    companyName: "CREATIVE PACKAGING",
+    companyAddress: "#70, \"O\" (Opp. Lunar's Exports) Hootagalli Industrial Area\n Mysore - 570018",
+    companyPhone: "990 090 0100, 948 353 4500",
+    companyEmail: "cp.mysore@gmail.com",
+    companyGST: "29AAFFC957P1ZQ",
+    bankName: "CANARA BANK - SME Branch, Mysore",
+    bankAccount: "2510261-1-158",
+    bankIFSC: "CANB0002510",
   });
 
   const [billData, setBillData] = useState({

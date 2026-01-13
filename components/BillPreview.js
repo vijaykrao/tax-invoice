@@ -6,16 +6,24 @@ function BillPreview({ billData, items }) {
 
   const calculateCGST = () => {
     const subtotal = calculateSubtotal();
-    return (subtotal * 9) / 100;
+    return parseFloat(((subtotal * 9) / 100).toFixed(2));
   };
 
   const calculateSGST = () => {
     const subtotal = calculateSubtotal();
-    return (subtotal * 9) / 100;
+    return parseFloat(((subtotal * 9) / 100).toFixed(2));
   };
 
   const calculateTotal = () => {
     return calculateSubtotal() + calculateCGST() + calculateSGST();
+  };
+
+  const calculateRoundedTotal = () => {
+    return Math.round(calculateTotal());
+  };
+
+  const calculateRoundOff = () => {
+    return calculateRoundedTotal() - calculateTotal();
   };
 
   const numberToWords = (num) => {
@@ -224,17 +232,17 @@ function BillPreview({ billData, items }) {
               ),
               e(
                 "div",
-                { style: { whiteSpace: "pre-line", fontSize: "12px" } },
+                { style: { whiteSpace: "pre-line", fontSize: "12px", fontWeight: "bold", color: "#000" } },
                 billData.companyAddress || ""
               ),
               e(
                 "div",
-                { style: { marginTop: "5px", fontSize: "12px" } },
+                { style: { marginTop: "5px", fontSize: "12px", fontWeight: "bold", color: "#000" } },
                 `Email: ${billData.companyEmail || ""}`
               ),
               e(
                 "div",
-                { style: { fontSize: "11px", marginTop: "5px" } },
+                { style: { fontSize: "11px", marginTop: "5px", fontWeight: "bold", color: "#000" } },
                 `📞 ${billData.companyPhone || ""}`
               )
             ),
@@ -253,19 +261,19 @@ function BillPreview({ billData, items }) {
                 "div",
                 { style: { marginBottom: "12px" } },
                 e("strong", null, "No: "),
-                billData.billNumber || ""
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.billNumber || "")
               ),
               e(
                 "div",
                 { style: { marginBottom: "12px" } },
                 e("strong", null, "Date: "),
-                formatDate(billData.billDate)
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, formatDate(billData.billDate))
               ),
               e(
                 "div",
                 null,
                 e("strong", null, "GSTN: "),
-                billData.companyGST || ""
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.companyGST || "")
               )
             )
           ),
@@ -298,17 +306,18 @@ function BillPreview({ billData, items }) {
                     fontWeight: "bold",
                     fontSize: "14px",
                     marginBottom: "5px",
+                    color: "#000",
                   },
                 },
                 billData.customerName || ""
               ),
               e(
                 "div",
-                { style: { whiteSpace: "pre-line", marginBottom: "5px" } },
+                { style: { whiteSpace: "pre-line", marginBottom: "5px", fontWeight: "bold", color: "#000" } },
                 billData.customerAddress || ""
               ),
               billData.customerPhone &&
-              e("div", null, `Contact: ${billData.customerPhone}`)
+              e("div", { style: { fontWeight: "bold", color: "#000" } }, `Contact: ${billData.customerPhone}`)
             ),
             e(
               "td",
@@ -320,7 +329,7 @@ function BillPreview({ billData, items }) {
                   "span",
                   null,
                   e("strong", null, "PO No: "),
-                  billData.poNumber || ""
+                  e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.poNumber || "")
                 ),
                 e(
                   "span",
@@ -360,7 +369,7 @@ function BillPreview({ billData, items }) {
                   "span",
                   null,
                   e("strong", null, "Ref No: "),
-                  billData.refNumber || ""
+                  e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.refNumber || "")
                 ),
                 e(
                   "span",
@@ -396,7 +405,7 @@ function BillPreview({ billData, items }) {
               e("strong", null, "Party's GST No: "),
               e(
                 "span",
-                { style: { color: "#0066cc" } },
+                { style: { fontWeight: "bold", color: "#000" } },
                 billData.customerGST || ""
               )
             )
@@ -411,7 +420,7 @@ function BillPreview({ billData, items }) {
                 style: { ...cellStyle, borderBottom: "2px solid #333" },
               },
               e("strong", null, "Dispatching Through: "),
-              billData.dispatchThrough || ""
+              e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.dispatchThrough || "")
             )
           ),
           // Items table header
@@ -427,7 +436,7 @@ function BillPreview({ billData, items }) {
             ),
             e(
               "td",
-              { colSpan: 3, style: { ...headerCellStyle, width: "42%" } },
+              { colSpan: 3, style: { ...headerCellStyle, width: "42%", textAlign: "center" } },
               "Particulars"
             ),
             e(
@@ -444,126 +453,142 @@ function BillPreview({ billData, items }) {
             e(
               "td",
               {
-                style: { ...headerCellStyle, width: "18%", textAlign: "right" },
+                style: { ...headerCellStyle, width: "18%", textAlign: "center" },
               },
               "Price/Unit"
             ),
             e(
               "td",
               {
-                style: { ...headerCellStyle, width: "20%", textAlign: "right" },
+                style: { ...headerCellStyle, width: "20%", textAlign: "center" },
               },
               "Total"
             )
           ),
           // Items rows
-          ...items.map((item, index) =>
-            e(
+          ...items.map((item, index) => {
+            // Create custom cell style based on position
+            const itemCellStyle = {
+              ...cellStyle,
+              borderBottom: "none", // Remove bottom border from all items
+              ...(index > 0 && { borderTop: "none" }) // Remove top border from items after the first
+            };
+
+            return e(
               "tr",
               { key: index },
               e(
                 "td",
-                { style: { ...cellStyle, textAlign: "center" } },
+                { style: { ...itemCellStyle, textAlign: "center", fontWeight: "bold", color: "#000" } },
                 index + 1
               ),
               e(
                 "td",
-                { colSpan: 3, style: { ...cellStyle, whiteSpace: "pre-line" } },
+                { colSpan: 3, style: { ...itemCellStyle, whiteSpace: "pre-line", fontWeight: "bold", color: "#000" } },
                 item.description || "-"
               ),
               e(
                 "td",
-                { style: { ...cellStyle, textAlign: "center" } },
+                { style: { ...itemCellStyle, textAlign: "center", fontWeight: "bold", color: "#000" } },
                 item.quantity || "0"
               ),
               e(
                 "td",
-                { style: { ...cellStyle, textAlign: "right" } },
+                { style: { ...itemCellStyle, textAlign: "right", fontWeight: "bold", color: "#000" } },
                 formatCurrency(parseFloat(item.price || 0))
               ),
               e(
                 "td",
-                { style: { ...cellStyle, textAlign: "right" } },
+                { style: { ...itemCellStyle, textAlign: "right", fontWeight: "bold", color: "#000" } },
                 formatCurrency(parseFloat(item.total || 0))
               )
-            )
-          ),
+            );
+          }),
           // Spacer row to fill remaining space with column lines
-          e(
-            "tr",
-            null,
-            e(
-              "td",
-              {
-                style: {
-                  ...cellStyle,
-                  borderTop: "none",
-                  padding: "0",
-                  height: "300px",
-                  width: "8%",
-                },
-              },
-              ""
-            ),
-            e(
-              "td",
-              {
-                colSpan: 3,
-                style: {
-                  ...cellStyle,
-                  borderTop: "none",
-                  padding: "8px",
-                  height: "300px",
-                  width: "42%",
-                  verticalAlign: "bottom",
-                },
-              },
+          (() => {
+            // Calculate dynamic spacer height
+            // Base height is 300px, subtracting approx 32px per item row
+            // (12px font + 16px padding + borders)
+            const ROW_HEIGHT = 32;
+            const BASE_HEIGHT = 300;
+            const dynamicHeight = Math.max(0, BASE_HEIGHT - (items.length * ROW_HEIGHT)) + "px";
+
+            return e(
+              "tr",
+              null,
               e(
-                "div",
-                { style: { fontWeight: "bold", fontSize: "11px" } },
-                "HSN CODE: 44129990 "
+                "td",
+                {
+                  style: {
+                    ...cellStyle,
+                    borderTop: "none",
+                    padding: "0",
+                    height: dynamicHeight,
+                    width: "8%",
+                  },
+                },
+                ""
+              ),
+              e(
+                "td",
+                {
+                  colSpan: 3,
+                  style: {
+                    ...cellStyle,
+                    borderTop: "none",
+                    padding: "8px",
+                    height: dynamicHeight,
+                    width: "42%",
+                    verticalAlign: "bottom",
+                  },
+                },
+                e(
+                  "div",
+                  { style: { fontWeight: "bold", fontSize: "11px" } },
+                  "HSN CODE: 44129990 "
+                )
+              ),
+              e(
+                "td",
+                {
+                  style: {
+                    ...cellStyle,
+                    borderTop: "none",
+                    padding: "0",
+                    height: dynamicHeight,
+                    width: "12%",
+                  },
+                },
+                ""
+              ),
+              e(
+                "td",
+                {
+                  style: {
+                    ...cellStyle,
+                    borderTop: "none",
+                    padding: "0",
+                    height: dynamicHeight,
+                    width: "18%",
+                  },
+                },
+                ""
+              ),
+              e(
+                "td",
+                {
+                  style: {
+                    ...cellStyle,
+                    borderTop: "none",
+                    padding: "0",
+                    height: dynamicHeight,
+                    width: "20%",
+                  },
+                },
+                ""
               )
-            ),
-            e(
-              "td",
-              {
-                style: {
-                  ...cellStyle,
-                  borderTop: "none",
-                  padding: "0",
-                  height: "300px",
-                  width: "12%",
-                },
-              },
-              ""
-            ),
-            e(
-              "td",
-              {
-                style: {
-                  ...cellStyle,
-                  borderTop: "none",
-                  padding: "0",
-                  height: "300px",
-                  width: "18%",
-                },
-              },
-              ""
-            ),
-            e(
-              "td",
-              {
-                style: {
-                  ...cellStyle,
-                  borderTop: "none",
-                  padding: "0",
-                  height: "300px",
-                  width: "20%",
-                },
-              },
-              ""
-            )
-          ),
+            );
+          })(),
           // Bottom section: E-Way Bill, Amount in Words, Bank details on left; GST and Total on right
           e(
             "tr",
@@ -584,13 +609,16 @@ function BillPreview({ billData, items }) {
                 {
                   style: {
                     marginBottom: "10px",
-                    fontWeight: "bold",
                   },
                 },
-                "E-Way Bill No: ",
-                billData.ewayBill
-                  ? billData.ewayBill.replace(/(.{4})/g, "$1 ").trim()
-                  : ""
+                e("strong", null, "E-Way Bill No: "),
+                e(
+                  "span",
+                  { style: { fontWeight: "bold", color: "#000" } },
+                  billData.ewayBill
+                    ? billData.ewayBill.replace(/(.{4})/g, "$1 ").trim()
+                    : ""
+                )
               )
             ),
             e(
@@ -624,6 +652,8 @@ function BillPreview({ billData, items }) {
                   textAlign: "right",
                   borderTop: "2px solid #333",
                   borderBottom: "1px solid #333",
+                  fontWeight: "bold",
+                  color: "#000",
                 },
               },
               calculateCGST() > 0 ? formatCurrency(calculateCGST()) : ""
@@ -647,11 +677,14 @@ function BillPreview({ billData, items }) {
                 {
                   style: {
                     marginBottom: "10px",
-                    fontWeight: "bold",
                   },
                 },
-                "Amount in Words: ",
-                calculateTotal() > 0 ? numberToWords(calculateTotal()) : ""
+                e("strong", null, "Amount in Words: "),
+                e(
+                  "span",
+                  { style: { fontWeight: "bold", color: "#000" } },
+                  calculateTotal() > 0 ? numberToWords(calculateRoundedTotal()) : ""
+                )
               )
             ),
             e(
@@ -677,6 +710,8 @@ function BillPreview({ billData, items }) {
                   ...cellStyle,
                   textAlign: "right",
                   borderBottom: "1px solid #333",
+                  fontWeight: "bold",
+                  color: "#000",
                 },
               },
               calculateSGST() > 0 ? formatCurrency(calculateSGST()) : ""
@@ -716,7 +751,7 @@ function BillPreview({ billData, items }) {
                   },
                 },
                 e("span", { style: { minWidth: "50px" } }, "Bank:"),
-                e("span", null, billData.bankName || "")
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.bankName || "")
               ),
               e(
                 "div",
@@ -728,13 +763,13 @@ function BillPreview({ billData, items }) {
                   },
                 },
                 e("span", { style: { minWidth: "90px" } }, "Account No:"),
-                e("span", null, billData.bankAccount || "")
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.bankAccount || "")
               ),
               e(
                 "div",
                 { style: { display: "flex", fontWeight: "bold" } },
                 e("span", { style: { minWidth: "90px" } }, "IFSC Code:"),
-                e("span", null, billData.bankIFSC || "")
+                e("span", { style: { fontWeight: "bold", color: "#000" } }, billData.bankIFSC || "")
               )
             ),
             e(
@@ -745,7 +780,11 @@ function BillPreview({ billData, items }) {
               "Round off"
             ),
             e("td", { style: cellStyle }, ""),
-            e("td", { style: { ...cellStyle, textAlign: "right" } }, "")
+            e(
+              "td",
+              { style: { ...cellStyle, textAlign: "right", fontWeight: "bold", color: "#000" } },
+              calculateTotal() > 0 ? formatCurrency(calculateRoundOff()) : ""
+            )
           ),
           e(
             "tr",
@@ -774,9 +813,10 @@ function BillPreview({ billData, items }) {
                   textAlign: "right",
                   fontWeight: "bold",
                   borderTop: "2px solid #333",
+                  color: "#000",
                 },
               },
-              calculateTotal() > 0 ? formatCurrency(calculateTotal()) : ""
+              calculateTotal() > 0 ? formatCurrency(calculateRoundedTotal()) : ""
             )
           ),
           // Footer section
@@ -834,7 +874,7 @@ function BillPreview({ billData, items }) {
                   e(
                     "div",
                     { style: { fontSize: "11px" } },
-                    "4. All disputes are subject to Bangalore Jurisdiction."
+                    "4. All disputes are subject to Mysore Jurisdiction."
                   ),
                   billData.notes &&
                   e(

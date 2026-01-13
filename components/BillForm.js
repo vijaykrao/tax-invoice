@@ -33,7 +33,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       e("label", null, "Bill Number"),
       e("input", {
         type: "text",
-        value: billData.billNumber,
+        value: billData.billNumber || "",
         onChange: (ev) => handleInputChange("billNumber", ev.target.value),
         placeholder: "INV-001",
       })
@@ -45,7 +45,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       e("label", null, "Bill Date"),
       e("input", {
         type: "date",
-        value: billData.billDate,
+        value: billData.billDate || "",
         onChange: (ev) => handleInputChange("billDate", ev.target.value),
       })
     ),
@@ -146,7 +146,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       e("label", null, "Customer Name"),
       e("input", {
         type: "text",
-        value: billData.customerName,
+        value: billData.customerName || "",
         onChange: (ev) => handleInputChange("customerName", ev.target.value),
         placeholder: "Enter customer name",
       })
@@ -157,7 +157,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       { className: "form-group" },
       e("label", null, "Customer Address"),
       e("textarea", {
-        value: billData.customerAddress,
+        value: billData.customerAddress || "",
         onChange: (ev) => handleInputChange("customerAddress", ev.target.value),
         placeholder: "Enter customer address",
       })
@@ -169,7 +169,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       e("label", null, "Customer Contact Number (Optional)"),
       e("input", {
         type: "text",
-        value: billData.customerPhone,
+        value: billData.customerPhone || "",
         onChange: (ev) => handleInputChange("customerPhone", ev.target.value),
         placeholder: "Enter customer contact number",
       })
@@ -181,7 +181,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       e("label", null, "Customer GST Number (Optional)"),
       e("input", {
         type: "text",
-        value: billData.customerGST,
+        value: billData.customerGST || "",
         onChange: (ev) => handleInputChange("customerGST", ev.target.value),
         placeholder: "Enter customer GST number",
       })
@@ -217,7 +217,7 @@ function BillForm({ billData, onUpdate, items, onItemsUpdate }) {
       { className: "form-group" },
       e("label", null, "Notes"),
       e("textarea", {
-        value: billData.notes,
+        value: billData.notes || "",
         onChange: (ev) => handleInputChange("notes", ev.target.value),
         placeholder: "Additional notes or terms",
       })
